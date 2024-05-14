@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="row mt-3">
+    <div class="col-md-9">
+        <h5 class="bg-danger text-white p-2">Customer Details</h5>
+
+        <table class="table">
+            <tr>
+                <th>Customer Name</th>
+                <td>{{user.first_name}}</td>
+            </tr>
+            <tr>
+                <th>Mobile Number</th>
+                <td>9898989898</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{user.email}}</td>
+            </tr>
+        </table>
+
+    <h5 class="bg-danger text-white p-1">Cart Details</h5>
+    {% for x in product %}
+        <div class="row">
+            <div class="col-md-3">
+                <img src="{{x.pid.pimage.url}}" width="100%" alt="">
+            </div>
+
+            <div class="col-md-9">
+                <table class="table table-borderless">
+                <tr>
+                    <th>Name:</th>
+                    <td>{{x.pid.name}}</td>
+                </tr>
+
+                <tr>
+                    <th>Price:</th>
+                    <td>Rs.{{x.pid.price}}</td>
+                </tr>
+
+                <tr>
+                    <th>Product Category:</th>
+                    {% if x.pid.cat == 1 %}
+                    <td>Mobile</td>
+                    {% elif x.pid.cat == 2 %}
+                    <td>Shoes</td>
+                    {% else %}
+                    <td>Clothes</td>
+                    {% endif %}
+                </tr>
+
+                <tr>
+                    <th>Quantity:</th>
+                    <td><a href="/changeqty/{{x.id}}?q=minus"><button class="btn btn-danger">-</button></a>
+                        <input type="number" name="qty" value="{{x.qty}}">
+                        <a href="/changeqty/{{x.id}}?q=plus"><button class="btn btn-success">+</button></a>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <td><a href="/removecart/{{x.id}}"><button class="btn btn-danger">Remove</button></a></td>
+                </tr>
+
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class="col-md-3">
+        <h5 class="bg-danger text-white p-1">Cart Total</h5>
+        <table class="table table-borderless">
+            <tr>
+                <th>Total Items</th>
+                <td>{{n}}</td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td>Rs.{{amt}}</td>
+            </tr>
+            <tr>
+                <td><a href="/placeorder"><button class="btn btn-danger">Place Order</button></a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock 'main' %}
